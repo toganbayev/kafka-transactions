@@ -8,7 +8,7 @@
 		<version>3.1.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>by.javaguru.ws</groupId>
+	<groupId>kz.toganbayev.ws</groupId>
 	<artifactId>mock-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>mock-service</name>

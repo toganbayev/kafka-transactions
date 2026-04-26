@@ -8,7 +8,7 @@
 		<version>3.3.0-SNAPSHOT</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>by.javaguru.estore</groupId>
+	<groupId>kz.toganbayev.estore</groupId>
 	<artifactId>transfer-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>transfer-service</name>
@@ -26,7 +26,7 @@
 			<artifactId>spring-kafka</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>by.javaguru.payments.ws</groupId>
+			<groupId>kz.toganbayev.payments.ws</groupId>
 			<artifactId>core</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
