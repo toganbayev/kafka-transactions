@@ -1,4 +1,4 @@
-# kafka-transactions
+# Kafka Transactions
 
 Event-driven payment transaction system using Kafka for microservice communication. Demonstrates transactional Kafka semantics, event-driven architecture, and microservice orchestration with Spring Boot.
 
