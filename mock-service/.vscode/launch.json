@@ -5,7 +5,7 @@
             "name": "Spring Boot-MockserviceApplication<mockservice>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
-            "mainClass": "by.javaguru.ws.mockservice.MockserviceApplication",
+            "mainClass": "kz.toganbayev.ws.mockservice.MockserviceApplication",
             "projectName": "mockservice",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
