@@ -275,31 +275,31 @@ curl -X POST http://localhost:8080/transfers \
        │  - Validation             │
        └────────┬─────────┬────────┘
                 │         │
-         Publish│         │ HTTP Call
-       Withdrawal│         │
+        Publish │         │ HTTP Call
+      Withdrawal│         │
                 │         ▼
                 │  ┌──────────────────┐
                 │  │   Mock Service   │ Port 8083
                 │  │  (Validation)    │
                 │  └──────────────────┘
                 │
-      ┌─────────▼─────────┐
-      │   Kafka Broker    │ Port 9092
-      │ withdraw-topic    │
-      │ deposit-topic     │
-      │ *.DLT (dead-letter)
-      └────┬──────────┬───┘
-           │          │
-      Consume│        │Consume
-           │          │
-    ┌──────▼──┐   ┌──▼───────┐
-    │Withdrawal│   │ Deposit  │ Port 8081
-    │Service   │   │ Service  │
-    │Port 8082 │   │          │
-    │- Debits  │   │- Credits │
-    └──────────┘   └──────────┘
-           │              │
-           └──────┬───────┘
+      ┌─────────▼──────────┐
+      │   Kafka Broker     │ Port 9092
+      │ withdraw-topic     │
+      │ deposit-topic      │
+      │ *.DLT (dead-letter)│
+      └────┬────────────┬──┘
+           │            │
+    Consume│            │Consume
+           │            │
+    ┌──────▼───┐   ┌────▼──────┐
+    │Withdrawal│   │ Deposit   │ Port 8081
+    │Service   │   │ Service   │
+    │Port 8082 │   │           │
+    │- Debits  │   │- Credits  │
+    └──────────┘   └───────────┘
+           │            │
+           └──────┬─────┘
                   │ (Account updates)
                   ▼
            [Database Ledger]
