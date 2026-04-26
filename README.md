@@ -54,12 +54,13 @@ Event-driven payment transaction system using Kafka for microservice communicati
 | Category | Technology |
 |----------|-----------|
 | **Language** | Java 17 |
-| **Framework** | Spring Boot 3.1.4 |
+| **Framework** | Spring Boot 3.3.0 |
 | **Message Broker** | Apache Kafka |
 | **Kafka Integration** | Spring Kafka + Spring Boot Starter |
 | **Build Tool** | Maven 3.8+ |
 | **Containerization** | Docker |
-| **Database** | TODO: PostgreSQL (for account ledger) |
+| **Database** | H2 (in-memory for dev/test) |
+| **ORM** | Hibernate + Spring Data JPA |
 
 ---
 
@@ -272,6 +273,7 @@ curl -X POST http://localhost:8080/transfers \
        │   Transfer Service        │ Port 8080
        │  - REST API               │
        │  - Event Orchestration    │
+       │  - Dual Transaction Mgmt  │
        │  - Validation             │
        └────────┬─────────┬────────┘
                 │         │
@@ -302,8 +304,9 @@ curl -X POST http://localhost:8080/transfers \
            └──────┬─────┘
                   │ (Account updates)
                   ▼
-           [Database Ledger]
-           (TODO: PostgreSQL)
+           [H2 Database]
+           (transfers table,
+            JPA persistence)
 ```
 
 ### Data Flow
@@ -375,10 +378,29 @@ WithdrawalRequestedEvent
 **transfer-service/application.properties:**
 
 ```properties
+# Server
 server.port=8080
-spring.kafka.consumer.bootstrap-servers=localhost:9092
-spring.kafka.consumer.group-id=transfer-group
-spring.kafka.consumer.isolation-level=READ_COMMITTED
+
+# Kafka Producer (with idempotence & transactions)
+spring.kafka.producer.bootstrap-servers=localhost:9092
+spring.kafka.producer.acks=all
+spring.kafka.producer.properties.enable.idempotence=true
+spring.kafka.producer.properties.max.in.flight.requests.per.connection=5
+spring.kafka.producer.transaction-id-prefix=transfer-service-${random.value}-
+
+# Kafka Topics
+withdraw-money-topic=withdraw-money-topic
+deposit-money-topic=deposit-money-topic
+
+# H2 Database
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.driverClassName=org.h2.Driver
+spring.datasource.username=test
+spring.datasource.password=test
+
+# JPA / Hibernate
+spring.jpa.database-platform=org.hibernate.dialect.H2Dialect
+spring.h2.console.enabled=true
 ```
 
 **deposit-service/application.properties:**
